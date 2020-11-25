@@ -15,11 +15,13 @@ ExitApp
 ^b::
 mode:=mode==2?0:(mode+1)
 if(mode==0){
-	MsgBox, "Enabled mode 1 (Melee)"
+	MsgBox, "Enabled mode 1 (Shoot)"
 }else if(mode==1){
-	MsgBox, "Enabled mode 2 (Gun+Knife Farming)"
+	MsgBox, "Enabled mode 2 (Melee)"
 }else if(mode==2){
-	MsgBox, "Enabled mode 3 (DIE Machine Farming)"
+	MsgBox, "Enabled mode 3 (Gun+Knife Farming)"
+}else if(mode==3){
+	MsgBox, "Enabled mode 4 (DIE Machine Farming)"
 }
 return
 
@@ -28,6 +30,8 @@ while (stopFlag<1){
 	if(mode==0){
 		SendLClick()
 	}else if(mode==1){
+		SendMelee()
+	}else if(mode==2){
 		if(Mod(timer, 50)==0){
 			SendWeaponSwap()
 			sleep 500
@@ -36,7 +40,7 @@ while (stopFlag<1){
 		}else{
 			SendLClick()
 		}
-	}else if(mode==2){
+	}else if(mode==3){
 		if(Mod(timer, 25)==0){
 			SendLClick()
 		}else{
@@ -59,6 +63,7 @@ SendInteract(){
 
 SendMelee(){
 	ControlSend,,e,ahk_exe BlackOpsColdWar.exe
+	sleep, 500
 }
 
 SendLClick(){
