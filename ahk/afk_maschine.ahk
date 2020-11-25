@@ -62,9 +62,11 @@ while break==1 {
 	}
 	sleep 25
 
-	;Pick up items with F
-	Send f
-	sleep 25
+	;Press f to pick up items/buy ammo if under ammo box every once and a while.
+	if(Mod(iterations, 50)==0){
+		Send f
+		sleep 25
+	}
 
 	;If at critical health, activate field upgrade and pause the game.
 	PixelSearch, Px, Py, 101, 1011, 229, 1018, %healthWhite%, 50, Fast
