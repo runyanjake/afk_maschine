@@ -13,7 +13,7 @@ SetControlDelay -1
 ExitApp
 
 ^b::
-mode:=mode==2?0:(mode+1)
+mode:=mode==3?0:(mode+1)
 if(mode==0){
 	MsgBox, "Enabled mode 1 (Shoot)"
 }else if(mode==1){
@@ -29,28 +29,43 @@ return
 while (stopFlag<1){
 	if(mode==0){
 		SendLClick()
+		SendInteract()
 	}else if(mode==1){
 		SendMelee()
+		SendInteract()
 	}else if(mode==2){
-		if(Mod(timer, 50)==0){
+		if(Mod(timer, 30)==0){
 			SendWeaponSwap()
-			sleep 500
+			sleep 2000
+			SendCrouchUncrouch()
+			sleep 250
 			SendInteract()
+			sleep 25
+			SendInteract()
+			sleep 25
+			SendInteract()
+			sleep 500
+			SendCrouchUncrouch()
 			sleep 250
 		}else{
-			SendLClick()
+			SendLongLClick()
 		}
 	}else if(mode==3){
-		if(Mod(timer, 25)==0){
+		if(Mod(timer, 10)==0){
 			SendLClick()
 		}else{
 			SendRClick()
 		}
+		SendInteract()
 	}
 	RandomSleep()
 	timer++
 }
 return
+
+SendCrouchUncrouch(){
+	ControlSend,,{Ctrl},ahk_exe BlackOpsColdWar.exe
+}
 
 SendWeaponSwap(){
 	ControlSend,,2,ahk_exe BlackOpsColdWar.exe
@@ -70,13 +85,19 @@ SendLClick(){
 	ControlClick,,ahk_exe BlackOpsColdWar.exe,,Left,1,NA x25 y25
 }
 
+SendLongLClick(){
+	ControlClick,,ahk_exe BlackOpsColdWar.exe,,Left,1,D
+	sleep, 1000
+	ControlClick,,ahk_exe BlackOpsColdWar.exe,,Left,1,U
+}
+
 SendRClick(){
 	ControlClick,,ahk_exe BlackOpsColdWar.exe,,Right,1,D
 	sleep, 1000
 	ControlClick,,ahk_exe BlackOpsColdWar.exe,,Right,1,U
 }
 
-RandomSleep() {
+RandomSleep(){
 	Random, amt, 1, 25
 	sleep (500 + (amt/2))
 }
